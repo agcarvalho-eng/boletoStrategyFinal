@@ -1,22 +1,15 @@
 package org.example.boletostrategyfinal.model;
 
 import org.example.boletostrategyfinal.LeituraRetorno;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Boleto {
     private int id;
-    private String codBanco;
+    private String codBanco,cpfCliente, agencia, contaBancaria;
     private LocalDate dataVencimento;
     private LocalDateTime dataPagamento;
-    private String cpfCliente;
-    private double valor;
-    private double multa;
-    private double juros;
-    private String agencia;
-    private String contaBancaria;
-
+    private double valor, multa,juros;
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public String getCodBanco() { return codBanco; }
@@ -38,24 +31,37 @@ public class Boleto {
     public String getContaBancaria() { return contaBancaria; }
     public void setContaBancaria(String contaBancaria) { this.contaBancaria = contaBancaria; }
 
+    // Sobrescreve o método toString para exibir os dados do boleto de forma formatada
     @Override
     public String toString() {
-        String str = String.format("Id: %10d Banco: %3s", id, codBanco);
-        String ag = "";
+        // Cria uma string formatada com o ID e código do banco
+        String resultado = String.format("Id: %10d Banco: %3s", id, codBanco);
+
+        // Inicializa uma string vazia para os dados de agência e conta, se existirem
+        String agenciaConta = "";
+
+        // Se agência e conta não forem nulas ou vazias, formata esses dados
         if (agencia != null && !agencia.isEmpty() && contaBancaria != null && !contaBancaria.isEmpty()) {
-            ag = String.format(" Ag: %6s CC: %10s", agencia, contaBancaria);
+            agenciaConta = String.format(" Ag: %6s CC: %10s", agencia, contaBancaria);
         }
 
-        str += ag + String.format(" Venc: %s Pag: %s Valor: %10.2f",
+        // Adiciona à string principal os dados de vencimento, pagamento e valor
+        resultado += agenciaConta + String.format(" Venc: %s Pag: %s Valor: %10.2f",
                 LeituraRetorno.FORMATO_DATA.format(dataVencimento),
                 LeituraRetorno.FORMATO_DATA_HORA.format(dataPagamento), valor);
+
+        // Se houver multa, adiciona à string
         if (multa > 0) {
-            str += String.format(" Multa: %10.2f", multa);
+            resultado += String.format(" Multa: %10.2f", multa);
         }
+
+        // Se houver juros, adiciona à string
         if (juros > 0) {
-            str += String.format(" Juros: %10.2f", juros);
+            resultado += String.format(" Juros: %10.2f", juros);
         }
-        return str;
+
+        // Retorna a string final com todos os dados formatados
+        return resultado;
     }
 }
 
