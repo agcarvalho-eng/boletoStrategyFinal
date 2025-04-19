@@ -31,7 +31,7 @@ public class Boleto {
     public String getContaBancaria() { return contaBancaria; }
     public void setContaBancaria(String contaBancaria) { this.contaBancaria = contaBancaria; }
 
-    // Sobrescreve o método toString para exibir os dados do boleto de forma formatada
+    // Sobrescreve o método toString utilizado para exibir os dados do boleto de forma formatada
     @Override
     public String toString() {
         // Cria uma string formatada com o ID e código do banco
